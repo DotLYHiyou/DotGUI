@@ -124,7 +124,7 @@ p {
 #games {
   text-align: center;
   #request {
-    color:#00eaff;
+    color:#ff0000;
     background-color: rgb(0, 0, 0);
   }
   select{
@@ -145,7 +145,7 @@ p {
     background-color: rgb(0, 0, 0);
     padding: 1em 2em;
     margin: 5px;
-    color: #ff0000;
+    color: rgb(0, 242, 255);
   }
   .button:hover {
     transform: translateY(-3px);
