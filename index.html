@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-     <!-- Google Adsense Tag--> 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2804654706224276"
-     crossorigin="anonymous"></script>
-  <title>Loading...</title>
-      <!-- Google tag (gtag.js) -->
+  <head>
+    <title>Starting Menu</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+        <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q919W0VJ1S"></script>
       <script>
           window.dataLayer = window.dataLayer || [];
@@ -18,194 +13,21 @@
           gtag('js', new Date());
           gtag('config', 'G-Q919W0VJ1S');
       </script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: linear-gradient(180deg, #066b99 20%, #00113d 100%);
-      background-size: cover;
-      background-repeat: no-repeat;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-family: "Outfit", sans-serif;
-      overflow: hidden;
-    }
-
-    #particles-js {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-    @keyframes fadeOut {
-      0% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-      }
-    }
-
-    .text {
-      font-family: "Outfit", sans-serif;
-      font-weight: 600;
-      font-style: normal;
-      margin-top: 10px;
-      font-size: 24px;
-      color: rgb(0, 0, 0);
-      animation: fadeOut 3s forwards;
-      z-index: 10;
-    }
-  </style>
-</head>
-<body>
-  <div id="particles-js"></div>
-  <div class="text" id="random-text"></div>
-
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  </head>
+  <body>
+  <div id="main">
+    <main>
+      <h1>Starting Menu</h1>
+      <p>Welcome to DotGUI! To start, choose a method:</p>
+      <div id="games">
+        <button type="button" class="nav-btn" onclick="location.href='/start.html'">Normal Way</button>
+        <button type="button" class="nav-btn" onclick="location.href='/launch.html'">About:Blank Way</button>
+      </div>
+      <p>More options will come as soon as they are available.</p>
+    </main>
+  </div>
+  </body>
   <script>
-    // Random text display
-    const texts = [
-      "DotGUI",
-      "epik",
-      "Getting things ready...",
-      "YO BEHIND YOU!",
-      "Lets hope you did your work."
-    ];
-
-    const random = texts[Math.floor(Math.random() * texts.length)];
-    const textDiv = document.getElementById("random-text");
-    if (typeof random === "string") {
-      textDiv.textContent = random;
-    } else if (random.type === "img") {
-      textDiv.innerHTML = `<img src="${random.src}" alt="${random.alt}" style="max-width:100px;max-height:100px;">`;
-    }
-
-    // Redirect after 3 seconds
-    window.onload = function() {
-      setTimeout(function() {
-        window.location.href = "start.html";
-      }, 3000);
-    };
-
-    // Particles.js configuration
-    particlesJS('particles-js', {
-      "particles": {
-        "number": {
-          "value": 160,
-          "density": {
-            "enable": true,
-            "value_area": 800
-          }
-        },
-        "color": {
-          "value": "#ffffff"
-        },
-        "shape": {
-          "type": "circle",
-          "stroke": {
-            "width": 0,
-            "color": "#000000"
-          },
-          "polygon": {
-            "nb_sides": 5
-          }
-        },
-        "opacity": {
-          "value": 1,
-          "random": true,
-          "anim": {
-            "enable": true,
-            "speed": 1,
-            "opacity_min": 0,
-            "sync": false
-          }
-        },
-        "size": {
-          "value": 3,
-          "random": true,
-          "anim": {
-            "enable": false,
-            "speed": 4,
-            "size_min": 0.3,
-            "sync": false
-          }
-        },
-        "line_linked": {
-          "enable": false,
-          "distance": 150,
-            "color": "#000000",
-          "opacity": 0.4,
-          "width": 1
-        },
-        "move": {
-          "enable": true,
-          "speed": 1,
-          "direction": "none",
-          "random": true,
-          "straight": false,
-          "out_mode": "out",
-          "bounce": false,
-          "attract": {
-            "enable": false,
-            "rotateX": 600,
-            "rotateY": 600
-          }
-        }
-      },
-      "interactivity": {
-        "detect_on": "canvas",
-        "events": {
-          "onhover": {
-            "enable": true,
-            "mode": "bubble"
-          },
-          "onclick": {
-            "enable": true,
-            "mode": "repulse"
-          },
-          "resize": true
-        },
-        "modes": {
-          "grab": {
-            "distance": 400,
-            "line_linked": {
-              "opacity": 1
-            }
-          },
-          "bubble": {
-            "distance": 250,
-            "size": 0,
-            "duration": 2,
-            "opacity": 0,
-            "speed": 3
-          },
-          "repulse": {
-            "distance": 400,
-            "duration": 0.4
-          },
-          "push": {
-            "particles_nb": 4
-          },
-          "remove": {
-            "particles_nb": 2
-          }
-        }
-      },
-      "retina_detect": true
-    });
-
-    // Tab cloaker script
     (function() {
       const value = localStorage.getItem('tabCloaker') || 'default';
       const favicon = document.querySelector("link[rel~='icon']") || (() => {
@@ -225,5 +47,6 @@
       }
     })();
   </script>
-</body>
+  <footer>
+  </footer>
 </html>
