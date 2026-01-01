@@ -1,10 +1,15 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 * {
   box-sizing: border-box;
 }
 #random-text{
   color: #00f2ff;
+}
+#ntv_2103197{
+  position: fixed; 
+  top: 0;          
+  left: 0;         
+  width: 100%;     
 }
 body {
   margin: 0;

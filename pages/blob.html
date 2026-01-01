@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>New Tab</title>
+<style>
+  :root{
+    --bg:#f7f9fc;
+    --card:#ffffff;
+    --muted:#6b7280;
+    --accent:#007bff;
+    --shadow: 0 8px 30px rgba(15,23,42,0.12);
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+    background:var(--bg);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px;
+    color:#111827;
+  }
+
+  /* Main stage */
+  .stage{
+    width:100%;
+    max-width:720px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:18px;
+    position:relative;
+  }
+
+  /* Settings button - FIXED top-right of viewport */
+  .settings-btn{
+    position:fixed;
+    top:18px;
+    right:18px;
+    width:44px;
+    height:44px;
+    background:var(--card);
+    border-radius:10px;
+    border:none;
+    box-shadow:0 6px 18px rgba(2,6,23,0.08);
+    display:grid;
+    place-items:center;
+    cursor:pointer;
+    transition:transform .16s ease, box-shadow .16s;
+    font-size:18px;
+    z-index:999;
+  }
+  .settings-btn:hover{ transform: rotate(20deg) scale(1.03); box-shadow:var(--shadow) }
+
+  /* Big white open button */
+  .open-btn{
+    background:var(--card);
+    border-radius:12px;
+    padding:22px 64px;
+    font-weight:700;
+    font-size:20px;
+    color:#111827;
+    border:none;
+    box-shadow:0 8px 24px rgba(15,23,42,0.12);
+    cursor:pointer;
+    transition: transform .18s ease, box-shadow .18s;
+  }
+  .open-btn:hover{ transform:translateY(-4px); box-shadow:0 14px 36px rgba(15,23,42,0.14) }
+  .open-btn:active{ transform:translateY(0) }
+
+  /* The "do not bookmark" text */
+  .warning{
+    font-size:13px;
+    color:#b91c1c;
+    font-weight:700;
+    margin-top:4px;
+  }
+
+  /* Modal overlay */
+  .overlay{
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:rgba(2,6,23,0.4);
+    z-index:40;
+    padding:20px;
+  }
+  .overlay.show{ display:flex }
+
+  /* Settings card */
+  .settings-card{
+    width:100%;
+    max-width:420px;
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:20px;
+    box-shadow:var(--shadow);
+    transform:translateY(6px) scale(.98);
+    opacity:0;
+    transition:transform .18s cubic-bezier(.2,.9,.3,1), opacity .18s;
+  }
+  .overlay.show .settings-card{ transform:none; opacity:1 }
+
+  .card-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:12px;
+  }
+  .card-title{
+    font-weight:700;
+    font-size:18px;
+    color:#0f1724;
+  }
+  .card-sub{
+    font-size:13px;
+    color:var(--muted);
+  }
+
+  /* Favicons grid */
+  .fav-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:14px;
+    justify-items:center;
+  }
+
+  .fav-tile{
+    width:72px;
+    height:72px;
+    background:rgba(15,23,42,0.02);
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    border:2px solid transparent;
+    transition: border-color .12s ease, transform .12s ease, box-shadow .12s;
+    outline:none;
+  }
+
+  /* Centering the image properly and handling odd aspect ratios:
+     we limit max-width/height instead of forcing both dims */
+  .fav-tile img{
+    display:block;
+    max-width:46px;
+    max-height:46px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    pointer-events:none;
+  }
+
+  .fav-tile:hover{ transform:translateY(-4px) }
+  .fav-tile.selected{
+    border-color:var(--accent);
+    box-shadow:0 8px 28px rgba(2,6,23,0.08);
+    background:linear-gradient(180deg, rgba(0,123,255,0.03), rgba(0,123,255,0.01));
+  }
+
+  /* Tile focus visible for keyboard users */
+  .fav-tile:focus{
+    box-shadow:0 0 0 3px rgba(0,123,255,0.12);
+  }
+
+  /* bottom row: selected label + controls */
+  .selected-label{
+    margin-top:12px;
+    font-size:13px;
+    color:var(--muted);
+    text-align:center;
+    min-height:18px;
+  }
+
+  .modal-actions{
+    display:flex;
+    gap:10px;
+    margin-top:16px;
+  }
+  .btn{
+    flex:1;
+    padding:10px 12px;
+    border-radius:10px;
+    border:none;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .btn.cancel{ background:#f1f5f9; color:#0f1724 }
+  .btn.save{ background:var(--accent); color:#fff }
+
+  /* small responsive tweaks */
+  @media (max-width:420px){
+    .fav-tile{ width:64px; height:64px }
+    .fav-tile img{ max-width:40px; max-height:40px }
+    .open-btn{ padding:18px 40px; font-size:18px }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage" aria-live="polite">
+  <!-- Settings button is fixed in top-right -->
+  <button class="settings-btn" id="openSettings" aria-label="Open settings">⚙️</button>
+
+  <button class="open-btn" id="openBtn">Open</button>
+  <div class="warning">*DO NOT bookmark the next page, it won’t exist after closing*</div>
+</div>
+
+<!-- Modal overlay -->
+<div class="overlay" id="overlay" aria-hidden="true">
+  <div class="settings-card" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="card-head">
+      <div>
+        <div id="settingsTitle" class="card-title">Settings</div>
+        <div class="card-sub">Choose a favicon — title will be applied automatically.</div>
+      </div>
+      <button id="closeX" aria-label="Close settings" style="background:none;border:none;font-size:18px;cursor:pointer">✕</button>
+    </div>
+
+    <div class="fav-grid" id="favGrid" role="list">
+      <!-- Tiles inserted by JS -->
+    </div>
+
+    <div class="selected-label" id="selectedLabel">Selected: New Tab</div>
+
+    <div class="modal-actions">
+      <button class="btn cancel" id="cancelBtn">Cancel</button>
+      <button class="btn save" id="saveBtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Configuration: order and labels */
+const options = [
+  { src: "http://4texas4.github.io/ratgames/m7bc3v.png", title: "New Tab" },                 // default first
+  { src: "https://5-t.vercel.app/assets/img/docs.webp", title: "Google Docs" },
+  { src: "https://www.gstatic.com/classroom/logo_square_rounded.svg", title: "Classes" },
+  { src: "https://www.google.com/favicon.ico", title: "Google" },
+  { src: "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png", title: "Home - Google Drive" },
+];
+
+/* DOM refs */
+const overlay = document.getElementById("overlay");
+const favGrid = document.getElementById("favGrid");
+const selectedLabel = document.getElementById("selectedLabel");
+const openSettings = document.getElementById("openSettings");
+const closeX = document.getElementById("closeX");
+const cancelBtn = document.getElementById("cancelBtn");
+const saveBtn = document.getElementById("saveBtn");
+const openBtn = document.getElementById("openBtn");
+
+/* Storage keys */
+const KEY_FAV = "rt_favicon_v1";
+const KEY_TITLE = "rt_title_v1";
+
+/* Defaults */
+const defaultIndex = 0; // catbox default
+
+let selectedIndex = defaultIndex;
+
+/* Build tiles */
+function buildTiles(){
+  favGrid.innerHTML = "";
+  options.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.className = "fav-tile";
+    btn.type = "button";
+    btn.setAttribute("data-index", i);
+    btn.setAttribute("aria-label", opt.title);
+    btn.title = opt.title; // tooltip on hover
+
+    const img = document.createElement("img");
+    img.src = opt.src;
+    img.alt = opt.title;
+    btn.appendChild(img);
+
+    btn.addEventListener("click", () => {
+      selectTile(i, true);
+    });
+
+    btn.addEventListener("keydown", e => {
+      if(e.key === "Enter" || e.key === " ") { e.preventDefault(); selectTile(i, true); }
+    });
+
+    favGrid.appendChild(btn);
+  });
+}
+
+/* Select a tile by index, update UI */
+function selectTile(index, userAction=false){
+  selectedIndex = index;
+  const tiles = favGrid.querySelectorAll(".fav-tile");
+  tiles.forEach((t,idx) => t.classList.toggle("selected", idx === index));
+  selectedLabel.textContent = "Selected: " + (options[index]?.title || "Untitled");
+  if(userAction){
+    tiles[index].focus();
+  }
+}
+
+/* Open/Close overlay with focus handling */
+function openOverlay(){
+  overlay.classList.add("show");
+  overlay.style.display = "flex";
+  overlay.setAttribute("aria-hidden", "false");
+  const tile = favGrid.querySelector(`.fav-tile[data-index="${selectedIndex}"]`);
+  if(tile) tile.focus();
+}
+function closeOverlay(){
+  overlay.classList.remove("show");
+  overlay.style.display = "none";
+  overlay.setAttribute("aria-hidden", "true");
+  openSettings.focus();
+}
+
+/* Load saved settings */
+function loadSettings(){
+  const savedFav = localStorage.getItem(KEY_FAV);
+  const savedTitle = localStorage.getItem(KEY_TITLE);
+  if(savedFav){
+    const idx = options.findIndex(o => o.src === savedFav);
+    if(idx >= 0) selectedIndex = idx;
+  } else {
+    selectedIndex = defaultIndex;
+  }
+  // update label text
+  if(savedTitle){
+    selectedLabel.textContent = "Selected: " + savedTitle;
+  } else {
+    selectedLabel.textContent = "Selected: " + options[selectedIndex].title;
+  }
+  requestAnimationFrame(()=> selectTile(selectedIndex,false));
+}
+
+/* Save settings to localStorage */
+function saveSettings(){
+  const opt = options[selectedIndex];
+  const title = opt.title || "New Tab";
+  const favicon = opt.src || "";
+  localStorage.setItem(KEY_FAV, favicon);
+  localStorage.setItem(KEY_TITLE, title);
+  closeOverlay();
+}
+
+/* Open blob tab with selected title + favicon; revoke URL quickly */
+function openBlobUrl(){
+  const favicon = localStorage.getItem(KEY_FAV) || options[selectedIndex].src;
+  const title = localStorage.getItem(KEY_TITLE) || options[selectedIndex].title || "New Tab";
+  const linkTag = favicon ? `<link rel="icon" href="${favicon}">` : "";
+
+  const content = `<!doctype html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>${escapeHtml(title)}</title>
+      ${linkTag}
+      <style>
+        html,body,iframe{margin:0;padding:0;border:0;height:100%;width:100%}
+        iframe{display:block;height:100vh;width:100vw}
+      </style>
+    </head>
+    <body>
+      <iframe src="https://dot-gui.vercel.app" allowfullscreen></iframe>
+    </body>
+  </html>`;
+
+  const blob = new Blob([content], {type: "text/html"});
+  const blobUrl = URL.createObjectURL(blob);
+  const w = window.open(blobUrl, "_blank");
+
+  setTimeout(()=> URL.revokeObjectURL(blobUrl), 800);
+  if(w) w.focus();
+}
+
+/* small HTML escape for title insertion */
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+}
+
+/* events */
+openSettings.addEventListener("click", ()=> {
+  const savedFav = localStorage.getItem(KEY_FAV);
+  const idx = options.findIndex(o => o.src === savedFav);
+  selectedIndex = idx >= 0 ? idx : defaultIndex;
+  selectTile(selectedIndex,false);
+  openOverlay();
+});
+closeX.addEventListener("click", closeOverlay);
+cancelBtn.addEventListener("click", closeOverlay);
+saveBtn.addEventListener("click", saveSettings);
+openBtn.addEventListener("click", openBlobUrl);
+
+overlay.addEventListener("click", (e) => {
+  if(e.target === overlay) closeOverlay();
+});
+
+/* initialize */
+buildTiles();
+loadSettings();
+
+/* accessibility: close on Esc */
+document.addEventListener("keydown", e=>{
+  if(e.key === "Escape" && overlay.classList.contains("show")) closeOverlay();
+});
+</script>
+</body>
+</html>

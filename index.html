@@ -5,9 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <!-- Bidvertiser2103197 -->
-     <!-- Begin BidVertiser code -->
-<SCRIPT data-cfasync="false" SRC="//bdv.bidvertiser.com/BidVertiser.dbm?pid=941013&bid=2103197&fid=2103197" TYPE="text/javascript"></SCRIPT>
-<!-- End BidVertiser code -->
+
     <link rel="stylesheet" href="styles.css" />
         <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q919W0VJ1S"></script>
@@ -19,6 +17,29 @@
       </script>
   </head>
   <body>
+    <div id="ntv_2103197"></div>
+<script type="text/javascript">
+(function(d) {
+	var params =
+	{
+		bvwidgetid: "ntv_2103197",
+		bvlinksownid: 2103197,
+		rows: 1,
+		cols: 5,
+		textpos: "right",
+		imagewidth: 150,
+		mobilecols: 2,
+		cb: (new Date()).getTime()
+	};
+	params.bvwidgetid = "ntv_2103197" + params.cb;
+	d.getElementById("ntv_2103197").id = params.bvwidgetid;
+	var qs = Object.keys(params).reduce(function(a, k){ a.push(k + '=' + encodeURIComponent(params[k])); return a},[]).join(String.fromCharCode(38));
+	var s = d.createElement('script'); s.type='text/javascript';s.async=true;
+	var p = 'https:' == document.location.protocol ? 'https' : 'http';
+	s.src = p + "://cdn.hyperpromote.com/bidvertiser/tags/active/bdvws.js?" + qs;
+	d.getElementById(params.bvwidgetid).appendChild(s);
+})(document);
+</script>
   <div id="main">
     <main>
       <h1>Starting Menu</h1>
@@ -26,7 +47,10 @@
       <div id="games">
         <button type="button" class="nav-btn" onclick="location.href='/start.html'">Normal Way</button>
         <button type="button" class="nav-btn" onclick="location.href='/launch.html'">About:Blank Way</button>
+        <button type="button" class="nav-btn" onclick="location.href='/blob.html'">Blob Way</button>
+        <button type="button" class="nav-btn" onclick="location.href='/dataurl.html'">DataURL Way</button>
       </div>
+      <br>
       <p>More options will come as soon as they are available.</p>
     </main>
   </div>
