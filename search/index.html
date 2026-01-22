@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DotGUI Search</title>
+    <script src="/sail/baremux/index.js"></script>
+    <script src="https://dotgui-cdn.vercel.app/scramjet.all.js"></script>
+    <script>
+        navigator.serviceWorker.register("https://dotgui-cdn.vercel.app/sw.js")
+    </script>
+</head>
+<body>
+    <style>
+        iframe {
+            height: 95vh;
+            width: 100vw;
+            background: #cfcfcf;
+            position: absolute;
+            left:0;
+            bottom: 0;
+        }
+    </style>
+
+    <input type="text" placeholder="url" id="bar"><button onclick="nav()">Go</button><br>
+    <iframe src="" frameborder="0" id="frame"></iframe>
+
+    <script>
+        const connection = new BareMux.BareMuxConnection("/sail/baremux/worker.js") // you could always use epoxy, but libcurl is better imo
+        connection.setTransport("/sail/libcurl/index.mjs", [{ websocket: "wss://anura.pro/" }]) // use some other wisp here
+
+        const frame = document.getElementById("frame")
+        const bar = document.getElementById("bar")
+
+        const { ScramjetController } = $scramjetLoadController()
+        const scramjet = new ScramjetController({
+            files: {
+                all: "https://dotgui-cdn.vercel.app/scramjet.all.js",
+                wasm: "https://dotgui-cdn.vercel.app/scramjet.wasm.wasm",
+                sync: "https://dotgui-cdn.vercel.app/scramjet.sync.js"
+            },
+            prefix: "/sail/go/" // feel free to change this later
+        })
+        scramjet.init()
+
+        function nav() {
+            let url = bar.value.trim()
+            if (!url) return;
+
+            if (!url.includes(".")) {
+                url = "https://duckduckgo.com/search?q=" + encodeURIComponent(url)
+            } else if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                url = "https://" + url
+            }
+
+            frame.src = scramjet.encodeUrl(url)
+        }
+
+        bar.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                nav()
+            }
+        })
+    </script>  
+    
+</body>
+</html>
