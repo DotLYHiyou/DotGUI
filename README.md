@@ -4,7 +4,7 @@
 
 # DotGUI (Formerly Zenithub, and before that, BlackoutGames.)
 
-DotGUI is an advanced game-site that features over 80+ games, a (half-baked atm) proxy, tools, clean UI and UX, and high-quality updates that bring much needed changes. We also have the fastest fan-service of ANY site out there!
+DotGUI is an advanced game-site that features over 80+ games, a static scramjet proxy, tools, clean UI and UX, and high-quality updates that bring much needed changes. We also have the fastest fan-service of ANY site out there!
 - Join the discord server [here](https://discord.gg/U8tT8AazXb) to get access to insights into future updates, important information, report bugs into more detail, recieve more detailed help with problems, get links, and more.
 - (Please note there isn't any general channel in the server, and you can only talk in the bug report channel, being off topic = 1 week mute, and repeated offenses give you an unappealable ban from the server.)
 
@@ -23,7 +23,7 @@ Go to one of our OFFICIAL Links listed in the Discord Server.
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/DotLYHiyou/DotGUI)
 - It is static, so you can deploy it to lots of static hosts.
 ### Data URL method
-This method kinda sucks cuz some games don't 
+This method kinda sucks cuz some games don't work at all
 ```
 data:text/html;charset=utf-8,<html><head><title>BERKSHIRE HATHAWAY INC.</title><style>body,html,iframe{margin:0;padding:0;height:100%;width:100%;overflow:hidden;border:none;}</style></head><body><iframe src="https://dot-gui.vercel.app/"></iframe></body></html>
 ```
@@ -39,6 +39,7 @@ for added security, navigate to settings and click the 2nd button.
 # Credits
 - Credits to all of the people who own the rights to the games, just open an issue to get a game taken down, just provide proof you own the game.
 - Credits to Mercury Workshop for Scramjet that my proxies going forward will depend on to work.
+- Credits to x8rr for sail-sj, the template that my search is based off of.
 - Credits to the following sources for the games:
   - UGS for the main games.
   - GN-Math for the Exotic games.
