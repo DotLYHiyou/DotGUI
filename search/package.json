@@ -1,0 +1,14 @@
+{
+  "name": "vercel-cors-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "node api/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

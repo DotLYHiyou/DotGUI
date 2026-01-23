@@ -39,7 +39,7 @@ for added security, navigate to settings and click the 2nd button.
 # Credits
 - Credits to all of the people who own the rights to the games, just open an issue to get a game taken down, just provide proof you own the game.
 - Credits to Mercury Workshop for Scramjet that my proxies going forward will depend on to work.
-- Credits to x8rr for sail-sj, the template that my search is based off of.
+- Credits to  4texas4 for ratproxy.
 - Credits to the following sources for the games:
   - UGS for the main games.
   - GN-Math for the Exotic games.
