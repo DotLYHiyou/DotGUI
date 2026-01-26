@@ -198,8 +198,20 @@
     </select>
   </form>
 
-  <div class="quote" id="quote"></div>
-
+  <div class="shortcuts" id="shortcuts">
+    <a class="shortcut" data-url="https://nowgg.fun/apps/a/19900/b.html">
+      <div class="shortcut-icon"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/roblox.svg">
+      </div>
+    </a>
+    <a class="shortcut" data-url="https://youtube.com">
+      <div class="shortcut-icon"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg">
+      </div>
+    </a>
+    <a class="shortcut" data-url="https://github.com">
+      <div class="shortcut-icon"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg">
+      </div>
+    </a>
+  </div>
   <script>
     const $ = s => document.querySelector(s);
     const nav = url => {
@@ -261,12 +273,6 @@
         addBtn.before(div);
       });
     }
-
-    // Quote
-    const quotes = [
-    "Code by Destroyed12121 on Github originally.",
-    "DotGUI so tuff"
-];
     $('#quote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
 
     renderCustom();

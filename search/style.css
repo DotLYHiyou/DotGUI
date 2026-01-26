@@ -3,11 +3,11 @@
 
 :root {
     /* Core colors */
-    --bg: linear-gradient(180deg, #066b99 20%, #00113d 100%);
-    --surface: #0f0f0f;
-    --surface-hover: #1a1a1a;
+    --bg: #043f5a;
+    --surface: #000000;
+    --surface-hover: rgb(0, 0, 0);
     --surface-active: #066b99;
-    --border: #1f1f1f;
+    --border: #000000;
     --border-light: #2a2a2a;
 
     /* Text */
