@@ -2,7 +2,7 @@
 // CONFIGURATION - Gets from config.js
 // =====================================================
 const DEFAULT_WISP = window.SITE_CONFIG?.defaultWisp ?? "wss://glseries.net/wisp/";
-const WISP_SERVERS = [{ name: "GLSeries", url: "wss://glseries.net/wisp/" }];
+const WISP_SERVERS = [{ name: "GLSeries", url: "wss://glseries.net/wisp/"}, {name: "Fern", url: "wss://fern.best"}, {name: "Anura", url: "wss://anura.pro/wisp"}];
 
 // Initialize default proxy server if not set
 if (!localStorage.getItem("proxServer")) {
@@ -246,7 +246,7 @@ async function initializeBrowser() {
     elements.backBtn.onclick = () => getActiveTab()?.frame.back();
     elements.fwdBtn.onclick = () => getActiveTab()?.frame.forward();
     elements.reloadBtn.onclick = () => getActiveTab()?.frame.reload();
-    document.getElementById('home-btn-nav').onclick = () => window.location.href = '../index.html';
+    document.getElementById('home-btn-nav').onclick = () => window.location.href = '../start.html';
     document.getElementById('devtools-btn').onclick = toggleDevTools;
     document.getElementById('wisp-settings-btn').onclick = openSettings;
 
