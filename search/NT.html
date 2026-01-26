@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>New Tab</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
     * {
       box-sizing: border-box;
       margin: 0;
@@ -13,9 +13,9 @@
     }
 
     body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #0a0a0a;
-      color: #e4e4e7;
+      font-family: 'Outfit', system-ui, sans-serif;
+      background: #066b99;
+      color: #000000;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -29,12 +29,12 @@
       font-weight: 600;
       letter-spacing: -2px;
       margin-bottom: 8px;
-      color: #ffffff;
+      color: #000000;
     }
 
     .date {
       font-size: 14px;
-      color: #71717a;
+      color: #000000;
       margin-bottom: 32px;
     }
 
@@ -210,7 +210,7 @@
     // Clock
     function updateClock() {
       const now = new Date();
-      $('#clock').textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+      $('#clock').textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
       $('#date').textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
     }
     updateClock();
