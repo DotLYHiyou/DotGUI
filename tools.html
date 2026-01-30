@@ -16,19 +16,30 @@
   </head>
   <body>
     <nav>
-      <button type="button" class="nav-btn" onclick="location.href='/start.html'">Home</button>
-      <button type="button" class="nav-btn" onclick="location.href='/select.html'">Games</button>
-      <button type="button" class="nav-btn" onclick="location.href='search/index.html'">Search</button>
-      <button type="button" class="nav-btn" aria-current="page" onclick="location.href='/tools.html'">Tools</button>
-      <button type="button" class="nav-btn" onclick="location.href='/settings.html'">Settings</button>
-      <button type="button" class="nav-btn" onclick="location.href='/disclaimer.html'">Disclaimer</button>
+      <button type="button" class="nav-btn" onclick="location.href='/start.html'">🏠</button>
+      <button type="button" class="nav-btn" onclick="location.href='/select.html'">🎮</button>
+      <button type="button" class="nav-btn" onclick="location.href='search/index.html'">🔍</button>
+      <button type="button" class="nav-btn" aria-current="page" onclick="location.href='/tools.html'">🛠</button>
+      <button type="button" class="nav-btn" onclick="location.href='/settings.html'">⚙</button>
+      <button type="button" class="nav-btn" onclick="location.href='/disclaimer.html'">📜</button>
     </nav>
     <div id="games">
       <main>
         <h1>Tools</h1>
+        <button class="button" onclick="window.location.href='pages/tool-pages/simplecalculator.html'">
+          <img src="media/tool-buttons/calc.jpg" alt="Calculator" style="width:130px;height:130px;">
+        </button>
+        <button class="button" onclick="window.location.href='pages/tool-pages/wavesai.html'">
+          <img src="media/tool-buttons/ai.jpg" alt="AI" style="width:130px;height:130px;">
+        </button>
+        <button class="button" onclick="window.location.href='pages/tool-pages/pico.html'">
+          <img src="media/tool-buttons/pico8.png" alt="Pico 8" style="width:130px;height:130px;">
+        </button>
+        <!--
         <button class="button" onclick="window.location.href='pages/tool-pages/wavesai.html'">Waves AI</button>
         <button class="button" onclick="window.location.href='pages/tool-pages/pico.html'">Pico 8 (Retro Game Engine)</button>
         <button class="button" onclick="window.location.href='pages/tool-pages/simplecalculator.html'">Simple Calculator</button>
+        -->
       </main>
     </div>
   </body>
