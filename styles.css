@@ -25,7 +25,12 @@ body {
   }
   p{
     a{
-      color: yellowgreen;
+      color: rgb(255, 0, 0);
+    }
+  }
+  h3{
+    a{
+      color: rgb(255, 0, 0);
     }
   }
 }
