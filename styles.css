@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
 * {
   box-sizing: border-box;
 }
-#random-text{
+#random-text {
   color: #00f2ff;
 }
-#ntv_2103197{
-  position: fixed; 
-  top: 0;          
-  left: 0;         
-  width: 100%;     
+#ntv_2103197 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 body {
   margin: 0;
@@ -23,13 +23,13 @@ body {
   h1 {
     font-size: 45px;
   }
-  p{
-    a{
+  p {
+    a {
       color: rgb(255, 0, 0);
     }
   }
-  h3{
-    a{
+  h3 {
+    a {
       color: rgb(255, 0, 0);
     }
   }
@@ -47,7 +47,7 @@ body {
   border-radius: 10px;
   border: none;
   padding: 0.8em 1.5em;
-  box-shadow: 0 2px 12px rgba(0,100,100,0.25);
+  box-shadow: 0 2px 12px rgba(0, 100, 100, 0.25);
   outline: none;
   margin-bottom: 20px;
   background: #022c3a;
@@ -88,12 +88,11 @@ nav .nav-btn {
   font-family: Outfit;
   display: inline-block;
   min-width: 9rem;
-  padding: 0.5rem;
+  padding: 0.4rem;
   border-radius: 0.2rem;
   border: solid 1px #555;
   text-align: center;
   text-decoration: none;
-  font-size: x-large;
   color: #00eaff;
   background: transparent;
   cursor: pointer;
@@ -103,9 +102,9 @@ nav button:hover {
   transform: scale(1.05);
 }
 
-nav a[aria-current='page'],
-nav button[aria-current='page'],
-nav .nav-btn[aria-current='page'] {
+nav a[aria-current="page"],
+nav button[aria-current="page"],
+nav .nav-btn[aria-current="page"] {
   font-family: Outfit;
   color: #000;
   background-color: #066b99;
@@ -135,10 +134,10 @@ p {
 #games {
   text-align: center;
   #request {
-    color:#ff0000;
+    color: #ff0000;
     background-color: rgb(0, 0, 0);
   }
-  select{
+  select {
     font-family: Outfit;
     background-color: rgb(0, 242, 255);
     border-radius: 10px;
@@ -152,25 +151,25 @@ p {
     text-decoration: none;
     display: inline-block;
     border-radius: 30px;
-    transition: all .2s;
+    transition: all 0.2s;
     border: none;
     font-family: Outfit;
     font-weight: 425;
     background-color: rgb(0, 0, 0);
-    padding: 0.82em 0.80em;
+    padding: 0.82em 0.8em;
     margin: 5px;
     color: rgb(0, 242, 255);
   }
   .button:hover {
     transform: translateY(-3px);
-    box-shadow: none; 
-}
+    box-shadow: none;
+  }
 
-.button:active {
+  .button:active {
     transform: translateY(-1px);
-}
+  }
 
-.button::after {
+  .button::after {
     content: "";
     display: inline-block;
     height: 100%;
@@ -180,11 +179,10 @@ p {
     top: 0;
     left: 0;
     z-index: -1;
-}
+  }
 
-.button:hover::after {
+  .button:hover::after {
     transform: scaleX(1.4) scaleY(1.6);
     opacity: 0;
-}
-
+  }
 }
