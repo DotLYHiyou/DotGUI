@@ -42,16 +42,18 @@
 </script>
   <div id="main">
     <main>
-      <h1>Starting Menu</h1>
-      <p>Welcome to DotGUI! To start, choose a method:</p>
+      <h1>Welcome to DotGUI!</h1>
       <div id="games">
-        <button type="button" class="nav-btn" onclick="location.href='/start.html'">Normal Way</button>
-        <button type="button" class="nav-btn" onclick="location.href='/launch.html'">About:Blank Way</button>
-        <button type="button" class="nav-btn" onclick="location.href='/blob.html'">Blob Way</button>
-        <button type="button" class="nav-btn" onclick="location.href='/dataurl.html'">DataURL Way</button>
+        <p>Click here to continue: (If you are in about:blank, click proceed.)</p>
+        <button type="button" class="nav-btn" onclick="location.href='/start.html'">Proceed</button>
+        <br>
+        <h2>If you can't access DotGUI normally:</h2>
+        <button type="button" class="nav-btn" onclick="location.href='/launch.html'">via About:Blank (very reliable)</button>
+        <button type="button" class="nav-btn" onclick="location.href='/blob.html'">via Blob: page (somewhat reliable)</button>
+        <button type="button" class="nav-btn" onclick="location.href='/dataurl.html'">via DataURL (unreliable)</button>
       </div>
       <br>
-      <p>More options will come as soon as they are available.</p>
+      <p>You can also <a href="https://github.com/DotLYHiyou/DotGUI?tab=readme-ov-file#for-hosts">self-host your own links!</a></p>
     </main>
   </div>
   </body>

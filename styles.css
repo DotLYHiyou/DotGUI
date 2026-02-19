@@ -15,7 +15,7 @@ body {
   margin: 0;
   font-family: system-ui, sans-serif;
   color: #b1e8fc;
-  background: linear-gradient(180deg, #066b99 20%, #00113d 100%);
+  background: linear-gradient(60deg, #066b99 20%, #00082e 90%);
   font-family: Outfit;
   display: flex;
   flex-direction: column;
@@ -25,20 +25,14 @@ body {
   }
   p {
     a {
-      color: rgb(255, 0, 0);
+      color: rgb(4, 0, 81);
     }
   }
   h3 {
     a {
-      color: rgb(255, 0, 0);
+      color: rgb(1, 0, 45);
     }
   }
-}
-
-.search-bar-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
 }
 
 .search-bar {
@@ -77,9 +71,9 @@ nav {
   align-items: center;
   justify-content: center;
   padding: 0.5rem;
-  gap: 0.5rem;
-  border-bottom: solid 1px #555;
-  background-color: #000000;
+  gap: 1.3rem;
+  border-bottom: solid 1px #000000;
+  background: #010f15;
 }
 
 nav a,
@@ -90,7 +84,7 @@ nav .nav-btn {
   min-width: 9rem;
   padding: 0.4rem;
   border-radius: 0.2rem;
-  border: solid 1px #555;
+  border: solid 1px #9f9f9f;
   text-align: center;
   text-decoration: none;
   color: #00eaff;
@@ -147,10 +141,10 @@ p {
   }
   button {
     position: relative;
-    font-size: 14px;
+    font-size: 18px;
     text-decoration: none;
     display: inline-block;
-    border-radius: 30px;
+    border-radius: 15px;
     transition: all 0.2s;
     border: none;
     font-family: Outfit;

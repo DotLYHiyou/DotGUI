@@ -42,40 +42,13 @@
     </nav>
     <div id="games">
       <main>
-        <h1>Settings Options:</h1>
+        <h1>Settings:</h1>
         <div style="margin-top:2rem;">
-          <label for="tabCloaker" style="font-size:1.2em;font-weight:bold;display:block;margin-bottom:0.5em;">Tab Cloaker</label>
           <select id="tabCloaker" style="font-size:1em;padding:0.5em;">
             <option value="default">Default</option>
             <option value="google">Google</option>
             <option value="vocab">Vocabulary.com</option>
           </select>
-          <div style="height:1.5em;"></div>
-          <label for="idk" style="font-size:1.2em;font-weight:bold;display:block;margin-bottom:0.5em;">Click to launch in about:blank if you aren't already:</label>
-          <button class="button" id="bg-launch-btn" onclick="openGame()" >Tab cloaker</button>
-          <script>
-          function openGame() {
-          var win = window.open();
-    var url = "start.html";
-    
-    win.document.title = 'Wikipedia';
-
-    var link = win.document.createElement('link');
-    link.rel = 'icon';
-    link.type = 'image/x-icon';
-    link.href = 'https://en.wikipedia.org/favicon.ico';
-    
-    win.document.head.appendChild(link);
-    
-    var iframe = win.document.createElement('iframe');
-    iframe.style.width = "100%";
-    iframe.style.height = "100%";
-    iframe.style.border = "none";
-    iframe.src = url;
-    win.document.body.appendChild(iframe);
-
-          }
-  </script>
         </div>
           <div style="height:1.5em;"></div>
         <script>
@@ -105,24 +78,7 @@
           const saved = localStorage.getItem('tabCloaker') || 'default';
           tabCloaker.value = saved;
           setTabCloak(saved);
-          // Background open helper: must be invoked by a user gesture (click)
-          function openAboutBlankInBackground() {
-            const newWin = window.open('about:blank', '_blank');
-            if (!newWin) {
-              console.warn('Popup blocked: cannot open about:blank in background.');
-              return;
-            }
-            try {
-              // Best-effort: try to keep focus on this page
-              newWin.blur();
-              window.focus();
-            } catch (e) {
-              // Ignore browsers that block blur/focus
-            }
-          }
-          const bgBtn = document.getElementById('bg-launch-btn');
-          if (bgBtn) bgBtn.addEventListener('click', openAboutBlankInBackground);
-        </script>
+           </script>
       </main>
     </div>
   </body>
