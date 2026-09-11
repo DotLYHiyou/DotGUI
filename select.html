@@ -52,6 +52,10 @@
           No results found. Please use the game suggestion form below. 👇
         </div>
         <button class="button" id="request" onclick="window.open('https://forms.gle/d8hBcyNGbLXk7cEk9', '_blank')">Game Request Form</button>
+        <br>
+        <button class="button" id="random-game" onclick="randomGame()">
+          <img src="media/random.png" alt="Random Game" style="width:130px;height:130px;">
+        </button>
         <div id="game-buttons">
           <button class="button" data-title="Fruit Ninja" onclick="window.location.href='pages/game-pages/fruitninja.html'">
             <img src="media/buttons/fruit.webp" alt="Fruit Ninja" style="width:130px;height:130px;">
@@ -313,10 +317,19 @@
         document.title = 'My Learning | Vocabulary.com';
         favicon.href = 'https://www.vocabulary.com/favicon.ico';
       } else {
-        document.title = 'Games';
         favicon.href = 'favicon.ico';
       }
     })();
+
+    // Random game - picks from all games, same tab
+    function randomGame() {
+      const buttons = document.querySelectorAll('#game-buttons .button');
+      if (!buttons.length) return;
+      const pick = buttons[Math.floor(Math.random() * buttons.length)];
+      const oc = pick.getAttribute('onclick') || '';
+      const m = oc.match(/pages\/game-pages\/[^']+/);
+      if (m) window.location.href = m[0];
+    }
 
     // Game button filter
     function filterGames() {

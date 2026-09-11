@@ -64,12 +64,39 @@
     <div class="taskbar">
       <button onclick="window.location.href='../../select.html'">Back</button>
       <button onclick="window.location.reload()">Restart</button>
-      <button onclick="window.location.href='../../game-embeds/gladd.html'">Full Screen</button>
+      <button onclick="window.location.href='../../game-embeds/gladd.html'">Raw</button>
+      <button onclick="goFullscreen()">Fullscreen</button>
     </div>
         <script>
             document.querySelector('.game-embed').focus();
         </script>
 
+<script>
+(function() {
+  try {
+    var PAGE = 'pages/game-pages/gladdihoppers.html';
+    var TITLE = document.title || PAGE;
+    var raw = localStorage.getItem('dotgui_recent') || '[]';
+    var arr = JSON.parse(raw);
+    if (!Array.isArray(arr)) arr = [];
+    arr = arr.filter(function(r) { return r && r.page !== PAGE; });
+    arr.unshift({page: PAGE, title: TITLE});
+    arr = arr.slice(0, 4);
+    localStorage.setItem('dotgui_recent', JSON.stringify(arr));
+  } catch (e) {}
+})();
+</script>
+<script>
+function goFullscreen() {
+  var el = document.getElementById('gameEmbed');
+  if (!el) return;
+  try {
+    if (el.requestFullscreen) { el.requestFullscreen(); }
+    else if (el.webkitRequestFullscreen) { el.webkitRequestFullscreen(); }
+    else if (el.msRequestFullscreen) { el.msRequestFullscreen(); }
+  } catch (e) { alert('Fullscreen blocked by browser.'); }
+}
+</script>
 </body>
 <script>
     (function() {

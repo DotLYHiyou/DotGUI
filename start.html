@@ -40,6 +40,12 @@
       <h1>DotGUI | Patch Update | 9/11/2026 </h1>
       <p id="random-text" style="font-size:1.2em; margin:20px 0;"></p>
       <p>Join our <a onclick=window.location.href="https://discord.com/invite/U8tT8AazXb">community server</a> to report problems and get more links. Make sure to star DotGUI on GitHub if you fork it!</p>
+      <div id="games">
+      <div id="recent" style="display:none;">
+        <h2>Recently Played:</h2>
+        <div id="recent-buttons"></div>
+      </div>
+      </div>
     <script>
         const texts = [
             '"Work on DotGUI, or quit and play Roblox?" - DotLYHiyou, probably',
@@ -53,6 +59,68 @@
             "I wish people would use the latest versions of DotGUI, but with the way I built this from the ground up, Its inevitable.",
         ];
         document.getElementById("random-text").textContent = texts[Math.floor(Math.random() * texts.length)];
+    </script>
+    <script>
+        (function() {
+            var recent = [];
+            try { recent = JSON.parse(localStorage.getItem('dotgui_recent') || '[]'); } catch (e) { recent = []; }
+            if (!Array.isArray(recent) || recent.length < 2) return;
+            recent = recent.slice(0, 4);
+            var box = document.getElementById('recent');
+            var btns = document.getElementById('recent-buttons');
+            function showFallback() {
+                btns.innerHTML = '';
+                recent.forEach(function(r) {
+                    var b = document.createElement('button');
+                    b.className = 'button';
+                    b.textContent = r.title || r.page;
+                    b.onclick = function() { window.location.href = r.page; };
+                    btns.appendChild(b);
+                });
+                box.style.display = '';
+            }
+            fetch('select.html').then(function(res) {
+                if (!res.ok) throw new Error('fetch failed');
+                return res.text();
+            }).then(function(html) {
+                var doc = new DOMParser().parseFromString(html, 'text/html');
+                var map = {};
+                doc.querySelectorAll('#game-buttons .button').forEach(function(b) {
+                    var oc = b.getAttribute('onclick') || '';
+                    var m = oc.match(/pages\/game-pages\/[^']+/);
+                    if (!m) return;
+                    var img = b.querySelector('img');
+                    map[m[0]] = {
+                        title: b.getAttribute('data-title') || (img && img.alt) || m[0],
+                        img: img ? img.getAttribute('src') : null,
+                        alt: img ? (img.getAttribute('alt') || '') : ''
+                    };
+                });
+                btns.innerHTML = '';
+                var shown = 0;
+                recent.forEach(function(r) {
+                    var info = map[r.page];
+                    if (!info) return;
+                    var b = document.createElement('button');
+                    b.className = 'button';
+                    b.setAttribute('data-title', info.title);
+                    b.onclick = (function(p) { return function() { window.location.href = p; }; })(r.page);
+                    if (info.img) {
+                        var im = document.createElement('img');
+                        im.setAttribute('src', info.img);
+                        im.setAttribute('alt', info.alt || info.title);
+                        im.setAttribute('style', 'width:130px;height:130px;');
+                        b.appendChild(im);
+                    } else {
+                        b.textContent = info.title;
+                    }
+                    btns.appendChild(b);
+                    shown++;
+                });
+                if (shown < 2) return;
+                box.style.display = '';
+            }).catch(showFallback);
+        })();
     </script>
     </main>
   </div>
@@ -73,7 +141,6 @@
         document.title = 'My Learning | Vocabulary.com';
         favicon.href = 'https://www.vocabulary.com/favicon.ico';
       } else {
-        document.title = 'DotGUI';
         favicon.href = 'favicon.ico';
       }
     })();
