@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>DotGUI</title>
+    <title>Search</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="styles.css" />
-        <!-- Google tag (gtag.js) -->
+    <!-- Google analytics tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q919W0VJ1S"></script>
       <script>
           window.dataLayer = window.dataLayer || [];
@@ -16,13 +16,13 @@
   </head>
   <body>
     <nav>
-      <button type="button" class="nav-btn" aria-current="page" onclick="location.href='start.html'">
+      <button type="button" class="nav-btn" onclick="location.href='start.html'">
         <img src="media/nav-buttons/home.svg" width="40px" height="40px">
       </button>
       <button type="button" class="nav-btn" onclick="window.location.href='select.html'">
         <img src="media/nav-buttons/game.svg" width="40px" height="40px">
       </button>
-      <button type="button" class="nav-btn" onclick="location.href='search.html'">
+      <button type="button" class="nav-btn" aria-current="page" onclick="location.href='search.html'">
         <img src="media/nav-buttons/search.svg" width="40px" height="40px">
       </button>
       <button type="button" class="nav-btn" onclick="location.href='tools.html'">
@@ -35,27 +35,15 @@
         <img src="media/nav-buttons/disclaimer.svg" width="40px" height="40px">
       </button>
     </nav>
-  <div id="main">
-    <main>
-      <h1>DotGUI | Patch Update | 9/11/2026 </h1>
-      <p id="random-text" style="font-size:1.2em; margin:20px 0;"></p>
-      <p>Join our <a onclick=window.location.href="https://discord.com/invite/U8tT8AazXb">community server</a> to report problems and get more links. Make sure to star DotGUI on GitHub if you fork it!</p>
-    <script>
-        const texts = [
-            '"Work on DotGUI, or quit and play Roblox?" - DotLYHiyou, probably',
-            "Did you know? DotGUI used to be the Zenithub Rework Update, but then I thought it through and realized throwing a rebrand in would be cool. Yeah, so much for being cool...",
-            "If I were to remake DotGUI, I would make sure a search would be available on day one.",
-            "Militant is the best TDS starter tower when you start the game. Change my mind.",
-            "Who needs global announcements that very easily get hijacked when you have these?",
-            "PLEASE stop using the request form for problems.",
-            "There is like 3-4 people who prob still check the community server that aren't bots. Please join it.",
-            "I have a lot of ideas for DotGUI, but I don't have the time to implement them all.",
-            "I wish people would use the latest versions of DotGUI, but with the way I built this from the ground up, Its inevitable.",
-        ];
-        document.getElementById("random-text").textContent = texts[Math.floor(Math.random() * texts.length)];
-    </script>
-    </main>
-  </div>
+    <div id="games">
+      <main>
+        <img src="media/error.webp" width="200" height="200" style="display:block;margin:0 auto;">
+        <h1>OH NOES!</h1>
+        <h3>Search temporarily unavailable rn. Try not to lose it</h3>
+        <h3>Hang tight!</h3>
+        <button type="button" onclick="location.href='start.html'">Return to Home</button>
+      </main>
+    </div>
   </body>
   <script>
     (function() {
@@ -73,14 +61,9 @@
         document.title = 'My Learning | Vocabulary.com';
         favicon.href = 'https://www.vocabulary.com/favicon.ico';
       } else {
-        document.title = 'DotGUI';
+        document.title = 'Search';
         favicon.href = 'favicon.ico';
       }
     })();
   </script>
-  <footer>
-    <p>Made by DotLYHiyou on Github. </p>
-    <p>There is no one other than listed contributors on the github page that are affiliated with this project.</p>
-    <p>If someone claims otherwise, close that tab and haul ass out of there.</p>
-  </footer>
 </html>

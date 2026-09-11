@@ -8,15 +8,26 @@
       </script>
       <!-- Bidvertiser2103197 -->
 <script>
+function launch() {
     var win = window.open ()
-    var url = "index.html"
+    if (!win) {
+        alert("Popup blocked. Allow pop-ups and try again.")
+        return
+    }
+    var url = "start.html"
     var iframe = win.document.createElement('iframe')
     iframe.style.width = "100%"
     iframe.style.height = "100%"
     iframe.style.border = "none"
     iframe.src = url
     win.document.body.appendChild(iframe)
+}
 </script>
 <link rel="stylesheet" href="styles.css">
-<h1>Now Redirecting...</h1>
-<p>If this doesn't load, try allowing pop-ups. Don't worry, we won't do anything to you, we just need it to launch the tab.</p>
+<div id="games">
+<main>
+<h1>Ready to Launch?</h1>
+<p>Click the button below to open DotGUI in about:blank. If nothing happens, allow pop-ups and try again. Don't worry, we won't do anything to you, we just need it to launch the tab.</p>
+<button class="button" onclick="launch()">Launch</button>
+</main>
+</div>

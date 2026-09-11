@@ -34,7 +34,7 @@
         height: 60px;
         background: rgba(20,20,20,0.98);
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
         align-items: center;
         gap: 16px;
         box-shadow: 0 -2px 8px #0008;
@@ -55,9 +55,7 @@
     .taskbar button:hover {
         background: #444;
     }
-    body {
-        background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
-    }
+
 </style>
 </head>
 <body>
@@ -66,7 +64,7 @@
     <div class="taskbar">
       <button onclick="window.location.href='../../select.html'">Back</button>
       <button onclick="window.location.reload()">Restart</button>
-      <button onclick="window.location.href='../../game-embeds/cookie.html'">Back</button>
+      <button onclick="window.location.href='../../game-embeds/cookie.html'">Full Screen</button>
     </div>
         <script>
             document.querySelector('.game-embed').focus();
@@ -89,7 +87,7 @@
             document.title = 'My Learning | Vocabulary.com';
             favicon.href = 'https://www.vocabulary.com/favicon.ico';
         } else {
-            favicon.href = '/favicon.ico';
+            favicon.href = '../../favicon.ico';
         }
     })();
 </script>
