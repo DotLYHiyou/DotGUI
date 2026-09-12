@@ -13,10 +13,20 @@
           gtag('js', new Date());
           gtag('config', 'G-Q919W0VJ1S');
       </script>
-    <style> 
+    <style>
       #games { display: flex; justify-content: center; }
       #games main { text-align: center; width: 100%; max-width: 900px; margin: 0 auto; }
       #games main > div { display: inline-block; text-align: center; }
+      .setting-section { display: block; width: 100%; max-width: 600px; margin: 1.5rem auto; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 12px; }
+      .setting-section h2 { margin-top: 0; }
+      .setting-section p.desc { font-size: 0.95em; opacity: 0.9; }
+      #cloak-preview { display: flex; align-items: center; gap: 8px; justify-content: center; background: #1e1e1e; color: #fff; border-radius: 8px 8px 0 0; padding: 8px 12px; max-width: 320px; margin: 1rem auto 0; font-size: 0.9em; }
+      #cloak-preview img { width: 16px; height: 16px; }
+      .setting-row { margin: 0.6rem 0; }
+      .setting-row input[type="text"] { font-size: 1em; padding: 0.4em; border-radius: 8px; border: none; }
+      #panic-key { width: 3em; text-align: center; }
+      #panic-url { width: 90%; max-width: 380px; }
+      #settings-status { min-height: 1.5em; color: #00f2ff; }
     </style>
   </head>
   <body>
@@ -43,42 +53,161 @@
     <div id="games">
       <main>
         <h1>Settings:</h1>
-        <div style="margin-top:2rem;">
-          <select id="tabCloaker" style="font-size:1em;padding:0.5em;">
-            <option value="default">Default</option>
-            <option value="google">Google</option>
-            <option value="vocab">Vocabulary.com</option>
-          </select>
+        <div class="setting-section">
+          <h2>Tab Cloak</h2>
+          <p class="desc">Disguises the tab title and icon on every page. Default keeps each page real title.</p>
+          <div class="setting-row">
+            <select id="tabCloaker" style="font-size:1em;padding:0.5em;">
+              <option value="default">Default</option>
+              <option value="google">Google</option>
+              <option value="vocab">Vocabulary.com</option>
+              <option value="canvas">Canvas</option>
+              <option value="drive">Google Drive</option>
+              <option value="docs">Google Docs</option>
+            </select>
+          </div>
+          <div id="cloak-preview"><img id="preview-icon" alt=""><span id="preview-title">Settings</span></div>
         </div>
-          <div style="height:1.5em;"></div>
+        <div class="setting-section">
+          <h2>Panic Key</h2>
+          <p class="desc">Press the key anywhere to instantly cloak to Google and jump to your redirect. Typing in search boxes never triggers it.</p>
+          <div class="setting-row">
+            <label for="panic-key">Key:</label>
+            <input id="panic-key" type="text" maxlength="1" autocomplete="off">
+          </div>
+          <div class="setting-row">
+            <label><input id="panic-redirect" type="checkbox"> Redirect on panic</label>
+          </div>
+          <div class="setting-row">
+            <label for="panic-url">Redirect to:</label><br>
+            <input id="panic-url" type="text" autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+        <div class="setting-section">
+          <h2>History</h2>
+          <p class="desc">Recently played row on home keeps your last 4 games. <span id="recent-count"></span></p>
+          <div class="setting-row">
+            <button class="button" id="clear-recent" type="button">Clear recent</button>
+            <button class="button" id="reset-all" type="button">Reset all</button>
+          </div>
+          <p id="settings-status"></p>
+        </div>
         <script>
-          // Tab cloaker logic for settings page
-          const tabCloaker = document.getElementById('tabCloaker');
-          const favicon = document.querySelector("link[rel~='icon']") || (() => {
-            const link = document.createElement('link');
+          var CLOAKS = {
+            google: { title: 'Google', icon: 'https://www.google.com/favicon.ico' },
+            vocab: { title: 'My Learning | Vocabulary.com', icon: 'https://www.vocabulary.com/favicon.ico' },
+            canvas: { title: 'Canvas', icon: 'https://canvas.instructure.com/favicon.ico' },
+            drive: { title: 'Google Drive', icon: 'https://drive.google.com/favicon.ico' },
+            docs: { title: 'Google Docs', icon: 'https://docs.google.com/favicon.ico' }
+          };
+          var PANIC_DEFAULTS = { key: 'k', url: 'https://classroom.google.com', redirect: true };
+          var tabCloaker = document.getElementById('tabCloaker');
+          var favicon = document.querySelector("link[rel~='icon']") || (() => {
+            var link = document.createElement('link');
             link.rel = 'icon';
             document.head.appendChild(link);
             return link;
           })();
+          var previewIcon = document.getElementById('preview-icon');
+          var previewTitle = document.getElementById('preview-title');
+          var ORIGINAL_TITLE = document.title || 'Settings';
+          function updatePreview(value) {
+            var c = CLOAKS[value];
+            previewTitle.textContent = c ? c.title : ORIGINAL_TITLE;
+            previewIcon.src = c ? c.icon : 'favicon.ico';
+          }
           function setTabCloak(value) {
-            if (value === 'google') {
-              document.title = 'Google';
-              favicon.href = 'https://www.google.com/favicon.ico';
-            } else if (value === 'vocab') {
-              document.title = 'My Learning | Vocabulary.com';
-              favicon.href = 'https://www.vocabulary.com/favicon.ico';
+            var c = CLOAKS[value];
+            if (c) {
+              document.title = c.title;
+              favicon.href = c.icon;
             } else {
+              document.title = ORIGINAL_TITLE;
               favicon.href = 'favicon.ico';
             }
-            // Save choice for other pages
-            localStorage.setItem('tabCloaker', value);
+            try { localStorage.setItem('tabCloaker', value); } catch (e) {}
+            updatePreview(value);
           }
-          tabCloaker.addEventListener('change', e => setTabCloak(e.target.value));
-          // On load, set dropdown and tab
-          const saved = localStorage.getItem('tabCloaker') || 'default';
+          tabCloaker.addEventListener('change', function(e) { setTabCloak(e.target.value); flash('Cloak saved.'); });
+          var panicKey = document.getElementById('panic-key');
+          var panicRedirect = document.getElementById('panic-redirect');
+          var panicUrl = document.getElementById('panic-url');
+          var recentCount = document.getElementById('recent-count');
+          var statusEl = document.getElementById('settings-status');
+          function flash(msg) { statusEl.textContent = msg; }
+          function refreshRecentCount() {
+            var n = 0;
+            try {
+              var arr = JSON.parse(localStorage.getItem('dotgui_recent') || '[]');
+              if (Array.isArray(arr)) n = arr.length;
+            } catch (e) {}
+            recentCount.textContent = n + (n === 1 ? ' game saved.' : ' games saved.');
+          }
+          panicKey.value = localStorage.getItem('dotgui_panic_key') || PANIC_DEFAULTS.key;
+          panicUrl.value = localStorage.getItem('dotgui_panic_url') || PANIC_DEFAULTS.url;
+          panicRedirect.checked = (localStorage.getItem('dotgui_panic_redirect') || 'true') === 'true';
+          panicKey.addEventListener('change', function() {
+            var v = (panicKey.value || '').slice(-1).toLowerCase();
+            panicKey.value = v;
+            try { localStorage.setItem('dotgui_panic_key', v); } catch (e) {}
+            flash('Panic key saved.');
+          });
+          panicUrl.addEventListener('change', function() {
+            var v = panicUrl.value.trim() || PANIC_DEFAULTS.url;
+            if (!/^https?:\/\//i.test(v)) v = 'https://' + v;
+            panicUrl.value = v;
+            try { localStorage.setItem('dotgui_panic_url', v); } catch (e) {}
+            flash('Redirect saved.');
+          });
+          panicRedirect.addEventListener('change', function() {
+            try { localStorage.setItem('dotgui_panic_redirect', panicRedirect.checked ? 'true' : 'false'); } catch (e) {}
+            flash('Redirect ' + (panicRedirect.checked ? 'on.' : 'off.'));
+          });
+          document.getElementById('clear-recent').addEventListener('click', function() {
+            try { localStorage.removeItem('dotgui_recent'); } catch (e) {}
+            refreshRecentCount();
+            flash('Recent cleared.');
+          });
+          document.getElementById('reset-all').addEventListener('click', function() {
+            try {
+              localStorage.removeItem('tabCloaker');
+              localStorage.removeItem('dotgui_recent');
+              localStorage.setItem('dotgui_panic_key', PANIC_DEFAULTS.key);
+              localStorage.setItem('dotgui_panic_url', PANIC_DEFAULTS.url);
+              localStorage.setItem('dotgui_panic_redirect', 'true');
+            } catch (e) {}
+            tabCloaker.value = 'default';
+            setTabCloak('default');
+            panicKey.value = PANIC_DEFAULTS.key;
+            panicUrl.value = PANIC_DEFAULTS.url;
+            panicRedirect.checked = true;
+            refreshRecentCount();
+            flash('All settings reset.');
+          });
+          var saved = localStorage.getItem('tabCloaker') || 'default';
           tabCloaker.value = saved;
           setTabCloak(saved);
-           </script>
+          refreshRecentCount();
+          // dotgui-panic: global panic key, guards typing
+          document.addEventListener('keydown', function(e) {
+            var t = e.target;
+            if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return;
+            var key = '';
+            try { key = localStorage.getItem('dotgui_panic_key') || 'k'; } catch (err) { key = 'k'; }
+            if ((e.key || '').toLowerCase() !== (key || '').toLowerCase() || !key) return;
+            try {
+              document.title = 'Google';
+              var f = document.querySelector("link[rel~='icon']");
+              if (f) f.href = 'https://www.google.com/favicon.ico';
+            } catch (err) {}
+            var go = true, url = 'https://classroom.google.com';
+            try {
+              go = (localStorage.getItem('dotgui_panic_redirect') || 'true') === 'true';
+              url = localStorage.getItem('dotgui_panic_url') || url;
+            } catch (err) {}
+            if (go && url) window.location.href = url;
+          });
+        </script>
       </main>
     </div>
   </body>

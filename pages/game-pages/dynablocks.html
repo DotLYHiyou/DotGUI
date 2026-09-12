@@ -96,6 +96,27 @@ function goFullscreen() {
   } catch (e) { alert('Fullscreen blocked by browser.'); }
 }
 </script>
+<script>
+          // dotgui-panic: global panic key, guards typing
+          document.addEventListener('keydown', function(e) {
+            var t = e.target;
+            if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return;
+            var key = '';
+            try { key = localStorage.getItem('dotgui_panic_key') || 'k'; } catch (err) { key = 'k'; }
+            if ((e.key || '').toLowerCase() !== (key || '').toLowerCase() || !key) return;
+            try {
+              document.title = 'Google';
+              var f = document.querySelector("link[rel~='icon']");
+              if (f) f.href = 'https://www.google.com/favicon.ico';
+            } catch (err) {}
+            var go = true, url = 'https://classroom.google.com';
+            try {
+              go = (localStorage.getItem('dotgui_panic_redirect') || 'true') === 'true';
+              url = localStorage.getItem('dotgui_panic_url') || url;
+            } catch (err) {}
+            if (go && url) window.location.href = url;
+          });
+        </script>
 </body>
 <script>
     (function() {
@@ -110,9 +131,18 @@ function goFullscreen() {
             document.title = 'Google';
             favicon.href = 'https://www.google.com/favicon.ico';
         } else if (value === 'vocab') {
-            document.title = 'My Learning | Vocabulary.com';
-            favicon.href = 'https://www.vocabulary.com/favicon.ico';
-        } else {
+          document.title = 'My Learning | Vocabulary.com';
+          favicon.href = 'https://www.vocabulary.com/favicon.ico';
+        } else if (value === 'canvas') {
+              document.title = 'Canvas';
+              favicon.href = 'https://canvas.instructure.com/favicon.ico';
+            } else if (value === 'drive') {
+              document.title = 'Google Drive';
+              favicon.href = 'https://drive.google.com/favicon.ico';
+            } else if (value === 'docs') {
+              document.title = 'Google Docs';
+              favicon.href = 'https://docs.google.com/favicon.ico';
+            } else {
             favicon.href = '../../favicon.ico';
         }
     })();
