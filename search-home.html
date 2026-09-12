@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Outfit, system-ui, sans-serif;
+      background: linear-gradient(60deg, #066b99 20%, #00082e 90%);
+      color: #b1e8fc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      padding: 24px;
+    }
+    #clock {
+      font-size: 64px;
+      font-weight: 300;
+      color: #00f2ff;
+      letter-spacing: 4px;
+    }
+    #home-search {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      max-width: 560px;
+    }
+    #home-search input {
+      flex: 1;
+      font-family: Outfit, sans-serif;
+      font-size: 1.1em;
+      padding: 0.8em 1.5em;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      background: #022c3a;
+      color: #b1e8fc;
+      transition: box-shadow 0.2s;
+    }
+    #home-search input:focus { box-shadow: 0 0 0 2px #00eaff; }
+    #home-search input::placeholder { color: #066b99; }
+    #quicklinks {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    #quicklinks button {
+      font-family: Outfit, sans-serif;
+      font-weight: 425;
+      font-size: 18px;
+      background: rgb(0, 0, 0);
+      color: rgb(0, 242, 255);
+      border: none;
+      border-radius: 15px;
+      padding: 0.8em 1.4em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    #quicklinks button:hover { transform: translateY(-3px); }
+    #quicklinks button:active { transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+  <div id="clock">00:00:00</div>
+  <form id="home-search">
+    <input id="q" type="text" placeholder="Search or enter URL..." autocomplete="off" spellcheck="false">
+  </form>
+  <div id="quicklinks">
+    <button data-url="https://www.youtube.com">YouTube</button>
+    <button data-url="https://www.twitch.tv">Twitch</button>
+    <button data-url="https://now.gg">Now.GG</button>
+    <button data-url="https://discord.com">Discord</button>
+  </div>
+  <script>
+    function tick() {
+      var d = new Date();
+      var p = function(n) { return (n < 10 ? '0' : '') + n; };
+      document.getElementById('clock').textContent =
+        p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    function resolve(input) {
+      var q = input.trim();
+      if (!q) return null;
+      if (/^https?:\/\//i.test(q)) return q;
+      if (q.indexOf(' ') === -1 && q.indexOf('.') !== -1) return 'https://' + q;
+      return 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(q);
+    }
+    function send(url) {
+      parent.postMessage({ type: 'dotgui-go', url: url }, '*');
+    }
+    document.getElementById('home-search').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var url = resolve(document.getElementById('q').value);
+      if (url) send(url);
+    });
+    document.querySelectorAll('#quicklinks button').forEach(function(b) {
+      b.addEventListener('click', function() { send(b.getAttribute('data-url')); });
+    });
+  </script>
+</body>
+</html>
